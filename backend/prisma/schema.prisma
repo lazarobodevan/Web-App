@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cliente{
+  idCliente     Int   @id @default(autoincrement())
+  nomeCliente   String
+  enderecoCliente String
+  telefoneCliente String
+  cidade        Cidade @relation(fields: [idCidade], references: [codigoCidade])
+  idCidade      Int
+  idVendas      Venda[]
+}
+
+model Cidade{
+  codigoCidade      Int   @id @default(autoincrement())
+  nomeCidade        String
+  estadoCidade      String
+  clientes          Cliente[]
+}
+
+model Produto{
+  idProduto         Int     @id @unique @default(autoincrement())
+  descricaoProduto  String
+  estoqueProduto    Int
+  precoCusto        Decimal
+  precoVenda        Decimal
+  fabricante        Fabricante @relation(fields: [idFabricante], references: [idFabricante])
+  idFabricante      Int
+  item              Item[]
+}
+
+model Fabricante{
+  idFabricante        Int   @id @default(autoincrement())
+  nomeFabricante      String
+  siteFabricante      String
+  produtos            Produto[]
+}
+
+model Venda{
+  idVendas            Int   @id @default(autoincrement())
+  cliente             Cliente @relation(fields: [idCliente], references: [idCliente])
+  item                Item @relation(fields: [idItem], references: [idItem])
+  dataVenda           DateTime
+  valorTotal          Decimal
+  valorPago           Decimal
+  desconto            Decimal
+  idCliente           Int
+  idItem              Int
+}
+
+model Item{
+  idItem              Int   @id @default(autoincrement())
+  produto             Produto @relation(fields: [idProduto], references: [idProduto])
+  idProduto           Int
+  venda               Venda[]
+}
