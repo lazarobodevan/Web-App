@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Cliente{
-  idCliente     Int   @id @default(autoincrement())
+  idCliente     Int   @id @unique @default(autoincrement())
   nomeCliente   String
   enderecoCliente String
   telefoneCliente String
@@ -21,7 +21,7 @@ model Cliente{
 }
 
 model Cidade{
-  codigoCidade      Int   @id @default(autoincrement())
+  codigoCidade      Int   @id @unique
   nomeCidade        String
   estadoCidade      String
   clientes          Cliente[]
@@ -39,14 +39,14 @@ model Produto{
 }
 
 model Fabricante{
-  idFabricante        Int   @id @default(autoincrement())
+  idFabricante        Int   @id @unique @default(autoincrement())
   nomeFabricante      String
   siteFabricante      String
   produtos            Produto[]
 }
 
 model Venda{
-  idVendas            Int   @id @default(autoincrement())
+  idVendas            Int   @id @unique @default(autoincrement())
   cliente             Cliente @relation(fields: [idCliente], references: [idCliente])
   item                Item @relation(fields: [idItem], references: [idItem])
   dataVenda           DateTime
@@ -58,7 +58,7 @@ model Venda{
 }
 
 model Item{
-  idItem              Int   @id @default(autoincrement())
+  idItem              Int   @id @unique @default(autoincrement())
   produto             Produto @relation(fields: [idProduto], references: [idProduto])
   idProduto           Int
   venda               Venda[]
