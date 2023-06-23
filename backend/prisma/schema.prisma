@@ -61,5 +61,6 @@ model Item{
   idItem              Int   @id @unique @default(autoincrement())
   produto             Produto @relation(fields: [idProduto], references: [idProduto])
   idProduto           Int
+  quantidadeItem      Int
   venda               Venda[]
 }
