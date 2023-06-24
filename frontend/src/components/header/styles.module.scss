@@ -1,0 +1,28 @@
+.container{
+    width: 100%;
+    height: 95px;
+    padding:  0 110px 0 110px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--primary1);
+
+    .title{
+        font-family: 'Gluten';
+        font-size: 36px;
+        color: white;
+        user-select: none;
+    }
+
+    .nav{
+        display: flex;
+        gap: 32px;
+
+        .nav_item{
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    }
+}

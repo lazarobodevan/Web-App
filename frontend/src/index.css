@@ -1,0 +1,12 @@
+:root{
+  --primary1: #17B77D;
+  --primary2: linear-gradient(180deg, #C29A31 0%, #CAA23D 100%);
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-family: 'Poppins';
+}
