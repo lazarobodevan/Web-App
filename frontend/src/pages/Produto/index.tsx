@@ -19,6 +19,7 @@ export default function Produto(){
                     defaultOption='Fabricante' 
                     options={[]}
                     style={{width:'282px', gridArea:'fab'}}
+                    onChange={()=>{return;}}
                 />
             </section>
             <Button>Cadastrar</Button>

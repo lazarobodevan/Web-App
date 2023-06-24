@@ -6,7 +6,8 @@ class ProdutoController{
 
     public async cadastrarProduto(req: Request, res: Response){
         try{
-            const {descricaoProduto, 
+            const { nomeProduto,
+                    descricaoProduto, 
                     estoqueProduto, 
                     precoCusto, 
                     precoVenda, 
@@ -15,6 +16,7 @@ class ProdutoController{
             
             const newProduto = await db.produto.create({
                 data:{
+                    nomeProduto,
                     descricaoProduto,
                     estoqueProduto,
                     precoCusto,
@@ -37,6 +39,21 @@ class ProdutoController{
 
             return res.status(200).json(produtos);
 
+        }catch(e:any){
+            console.log(e);
+            return sendError(e);
+        }
+    }
+
+    public async getProdutoById(req:Request, res:Response){
+        try{
+            const {id} = req.params;
+
+            const produto = await db.produto.findUnique({where:{
+                idProduto: Number(id)
+            }})
+
+            return res.status(200).json(produto);
         }catch(e:any){
             console.log(e);
             return sendError(e);

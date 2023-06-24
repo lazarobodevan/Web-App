@@ -29,6 +29,7 @@ model Cidade{
 
 model Produto{
   idProduto         Int     @id @unique @default(autoincrement())
+  nomeProduto       String
   descricaoProduto  String
   estoqueProduto    Int
   precoCusto        Decimal

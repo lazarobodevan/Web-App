@@ -13,6 +13,7 @@ export default function AppRoutes(){
                 <Route path="/" element={<BasePage/>}>
                     <Route index element={<Home/>}></Route>
                     <Route path="/produto" element={<Produto/>}></Route>
+                    <Route path="/produto/:id" element={<Details/>}></Route>
                     <Route path="/cliente" element={<Cliente/>}></Route>
                     <Route path="/fabricante" element={<Fabricante/>}></Route>
                     <Route path="/relatorio" element={<Details/>}></Route>

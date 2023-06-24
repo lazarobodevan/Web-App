@@ -2,11 +2,13 @@
 import express from 'express';
 import router from './router';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 export class App{
     constructor(private port = 3000, public app = express()){}
 
     public init():void{
+        this.app.use(cors());
         this.setupExpress();
         this.setupRoutes();
     }
