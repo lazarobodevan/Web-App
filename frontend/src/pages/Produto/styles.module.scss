@@ -1,0 +1,10 @@
+.content{
+    display: grid;
+    grid-template-columns: 40% 40%;
+    grid-template-rows: 20% 20% 20%;
+    grid-template-areas: "name custo"
+                        "desc venda"
+                        "esto fab";
+    grid-gap: 20px;
+    margin-top: 20px;
+}
