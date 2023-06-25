@@ -9,14 +9,14 @@ export default function Cliente(){
         <section>
             <Title>Cadastrar Cliente</Title>
             <section className={styles.content}>
-                <Input type='text' placeholder='Nome' style={{width:'300px', gridArea:'name'}}/>
-                <Input type='text' placeholder='Endereço' style={{gridArea:'end'}}/>
-                <Input type='tel' placeholder='Telefone' style={{width:'282px', gridArea:'tel'}}/>
-                <Input type='text' placeholder='Cidade' style={{width:'282px', gridArea:'cid'}}/>
-                <Input type='number' placeholder='CEP' style={{width:'282px', gridArea:'cep'}}/>
-                <Input type='text' placeholder='Estado' style={{width:'282px', gridArea:'estado'}}/>
+                <Input onChange={()=>{return}} type='text' placeholder='Nome' style={{width:'300px', gridArea:'name'}}/>
+                <Input onChange={()=>{return}} type='text' placeholder='Endereço' style={{gridArea:'end'}}/>
+                <Input onChange={()=>{return}} type='tel' placeholder='Telefone' style={{width:'282px', gridArea:'tel'}}/>
+                <Input onChange={()=>{return}} type='text' placeholder='Cidade' style={{width:'282px', gridArea:'cid'}}/>
+                <Input onChange={()=>{return}} type='number' placeholder='CEP' style={{width:'282px', gridArea:'cep'}}/>
+                <Input onChange={()=>{return}} type='text' placeholder='Estado' style={{width:'282px', gridArea:'estado'}}/>
             </section>
-            <Button>Cadastrar</Button>
+            <Button onClick={()=>{return}}>Cadastrar</Button>
         </section>
     )
 }

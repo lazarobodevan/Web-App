@@ -12,7 +12,7 @@ class VendaController{
                     valorPago, 
                 } = req.body;
 
-
+                console.log(req.body)
             const produtoSolicitado = await db.produto.findUnique({where:{
                 idProduto
             }});

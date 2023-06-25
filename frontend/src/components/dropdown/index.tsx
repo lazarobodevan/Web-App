@@ -13,9 +13,9 @@ interface Props{
 export default function Dropdown({name, defaultOption, options, style, onChange}:Props){
 
     return(
-        <select name={name} style={style} className={styles.select} onChange={event => onChange(event.target.value)}>
+        <select name={name} style={style} className={styles.select} onChange={event => onChange(event)}>
 
-            <option value={undefined}>{defaultOption}</option>
+            <option value=''>{defaultOption}</option>
 
             {options.map((option)=>{
                 return <option value={option.value}>{option.text}</option>

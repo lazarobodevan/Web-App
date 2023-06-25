@@ -10,6 +10,14 @@ import { useEffect, useState } from 'react'
 import { IProduto } from '../../common/IProduto'
 import { API_BASE_URL } from '../../common/API'
 import { stringify } from 'querystring'
+import { ICliente } from '../../common/ICliente'
+import ProductsService from '../../services/ProductsService'
+import ClienteService from '../../services/ClienteService'
+import ToastService from '../../common/toast/ToastService'
+import { ToastContainer } from 'react-toastify'
+import { IVenda } from '../../common/IVenda'
+import VendaService from '../../services/VendaService'
+
 
 export default function Details(){
 
@@ -19,12 +27,13 @@ export default function Details(){
         estoqueProduto:0,
         idFabricante: -1,
         idProduto: -1,
-        nomeProduto: "undefined",
+        nomeProduto: "",
         precoCusto: "-1",
         precoVenda: "-1"
     });
 
-    const [quantidadeSelecionada, setQuantidadeSelecionada] = useState(0);
+    const [clientes, setClientes] = useState<ICliente[]>();
+    const [venda, setVenda] = useState<IVenda>();
 
     function getQuantidade(qtd:number){
         let options:IDropdownOption[] = [];
@@ -37,13 +46,75 @@ export default function Details(){
         }
         return options;
     }
+
+    function calcTotal(){
+        return (venda?.quantidadeProduto || 0) * Number(produto.precoVenda) || '0.00'
+    }
+
+    function getClientesOptions(): IDropdownOption[]{
+        const options: IDropdownOption[] = [];
+
+        clientes?.forEach((cliente)=>{
+            options.push({
+                text: cliente.nomeCliente,
+                value: cliente.idCliente
+            })
+        })
+        return options;
+    }
+
+    function handleChange(event:any){
+        const fieldValue = event.target.value;
+        const fieldName = event.target.name;
+        
+        setVenda((currentValues:any) =>{
+            return {
+                ...currentValues,
+                [fieldName]:Number(fieldValue),
+                idProduto: Number(params.id),
+                desconto:0
+            }
+        });
+    }
+
+    function handleCompra(event?:any){
+        if(produto.estoqueProduto === 0){
+            return ToastService.error('Produto indisponível');
+        }
+        if(!venda){
+            return ToastService.error('Todos os campos são obrigatórios.');
+        }
+        if(venda && !venda.idCliente){
+            return ToastService.error('Selecione um cliente');
+        }
+        if(venda && !venda.quantidadeProduto){
+            return ToastService.error('Selecione uma quantidade')
+        }
+        if((venda?.valorPago || 0) < Number(calcTotal())){
+            return ToastService.error('Valor pago insuficiente');
+        }
+        console.log(venda)
+        event.preventDefault();
+        VendaService.cadastrarVenda(venda).then((body)=>{
+            ToastService.success("Venda realizada com sucesso!");
+            setTimeout(()=>{
+
+            },5000);
+            window.location.reload();
+        }).catch((error)=>{
+            ToastService.error(error);
+        });
+
+    }
     
     useEffect(()=>{
-        fetch(`${API_BASE_URL}/produto?id=${params.id}`)
-            .then(res => res.json())
-            .then(res =>{
-                setProduto(res[0]);
-            })
+        ProductsService.getProducts(Number(params.id)).then(res =>
+            setProduto(res[0])
+        );
+        ClienteService.getClientes().then(res =>{
+            setClientes(res);
+        })
+
     },[])
 
     return(
@@ -56,17 +127,22 @@ export default function Details(){
                 <div className={styles.form}>
                     <Dropdown 
                         defaultOption={'Quantidade'} 
-                        name='Quantidade' 
+                        name='quantidadeProduto' 
                         options={getQuantidade(produto.estoqueProduto)} 
                         style={{width:'282px'}}
-                        onChange={setQuantidadeSelecionada}
+                        onChange={(event) => handleChange(event)}
                     />
-                    <Input type='tel' placeholder='Telefone do cliente' style={{width:'282px'}}/>
-                    <span className={styles.total}>Total: R${quantidadeSelecionada * Number(produto.precoVenda) || '0.00'}</span>
+                    <Dropdown defaultOption={'Cliente'} name='idCliente' options={getClientesOptions()} onChange={(event) => handleChange(event)} style={{width:'282px'}}/>
+                    <Input type='number' onChange={(event) => handleChange(event)} name='valorPago' style={{width: '282px'}} placeholder='Valor pago'/>
+                    <span className={styles.total}>Total: R${(venda?.quantidadeProduto || 0) * Number(produto.precoVenda) || '0.00'}</span>
                 </div>
 
-                <Button style={{gridArea:"btn", marginLeft:"130px"}}>Comprar</Button>
-
+                <Button 
+                    style={{gridArea:"btn", marginLeft:"130px"}}
+                    onClick={(event)=>handleCompra(event)}
+                >
+                    Comprar
+                </Button>
                 <div className={styles.image_wrapper}>
                     <img src={image}/>
                 </div>
@@ -76,6 +152,16 @@ export default function Details(){
                 </div>
 
             </section>
+            <ToastContainer position="bottom-right"
+                    autoClose={1000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
         </>
     )
 

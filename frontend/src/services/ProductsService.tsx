@@ -2,19 +2,12 @@ import { API_BASE_URL } from "../common/API";
 
 class ProductService{
 
-    public async getProducts(){
+    public async getProducts(id?:number){
 
-        const products = await fetch(`${API_BASE_URL}/produto`)
+        const products = await fetch(`${API_BASE_URL}/produto${id ? `?id=${id}` : ''}`)
             .then(resp => resp.json());
         return products;
 
-    }
-
-    public async getProductById(id:number){
-        const product = await fetch(`${API_BASE_URL}/produto/${id}`)
-            .then(resp => resp.json());
-
-        return product;
     }
 }
 

@@ -8,10 +8,10 @@ export default function Fabricante(){
         <section>
             <Title>Cadastrar Fabricante</Title>
             <section className={styles.content}>
-                <Input type='text' placeholder='Nome' />
-                <Input type='text' placeholder='Site' />
+                <Input onChange={()=>{return}} type='text' placeholder='Nome' />
+                <Input onChange={()=>{return}} type='text' placeholder='Site' />
             </section>
-            <Button>Cadastrar</Button>
+            <Button onClick={()=>{return}}>Cadastrar</Button>
         </section>
     )
 }

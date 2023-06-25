@@ -26,7 +26,7 @@ class ClienteController{
 
     public async getClientes(req:Request, res:Response){
         try{
-            const clientes = await db.cliente.findMany({});
+            const clientes = await db.cliente.findMany({orderBy:{nomeCliente:'asc'}});
 
             return res.status(200).json(clientes);
         }catch(e){
