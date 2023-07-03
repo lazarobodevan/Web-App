@@ -23,9 +23,7 @@ class CidadeController{
 
     public async getCidades(req:Request, res:Response){
         try{
-            const cidades = await db.cidade.findMany({select:{
-                
-            }});
+            const cidades = await db.cidade.findMany({});
 
             return res.status(200).json(cidades);
 

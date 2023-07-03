@@ -57,7 +57,7 @@ export default function Details(){
         clientes?.forEach((cliente)=>{
             options.push({
                 text: cliente.nomeCliente,
-                value: cliente.idCliente
+                value: cliente.idCliente || 0
             })
         })
         return options;
@@ -109,7 +109,8 @@ export default function Details(){
     
     useEffect(()=>{
         ProductsService.getProducts(Number(params.id)).then(res =>
-            setProduto(res[0])
+            {setProduto(res);
+            console.log(res);}
         );
         ClienteService.getClientes().then(res =>{
             setClientes(res);
@@ -147,7 +148,7 @@ export default function Details(){
                     <img src={image}/>
                 </div>
                 <div className={styles.info}>
-                    <p className={styles.price}>R${produto.precoVenda}</p>
+                    <p className={styles.price}>R${Number(produto.precoVenda).toFixed(2)}</p>
                     <span className={styles.available}>Disponível: {produto.estoqueProduto} unidades</span>
                 </div>
 

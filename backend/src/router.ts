@@ -5,6 +5,7 @@ import fabricanteRoutes from './routes/FabricanteRoutes'
 import produtoRoutes from './routes/ProdutoRoutes'
 import itemRoutes from './routes/ItemRoutes'
 import vendaRoutes from './routes/VendaRoutes'
+import relatorioRoutes from './routes/RelatorioRoutes'
 
 class Routes{
     static define(router:Router):Router{
@@ -14,6 +15,7 @@ class Routes{
         router.use(produtoRoutes);
         router.use(itemRoutes);
         router.use(vendaRoutes);
+        router.use(relatorioRoutes);
 
         return router;
     }
